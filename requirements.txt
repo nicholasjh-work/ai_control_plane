@@ -1,3 +1,11 @@
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
-pydantic==2.8.2
+fastapi
+uvicorn[standard]
+pydantic
+sqlalchemy
+psycopg2-binary
+sqlglot
+ruff
+black
+pytest
+httpx
+python-dotenv

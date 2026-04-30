@@ -15,12 +15,14 @@ class ResolverAgent(BaseAgent):
                 "suggested_actions": [
                     "Check system logs",
                     "Validate dependencies",
-                    "Notify stakeholders"
+                    "Notify stakeholders",
                 ],
                 "draft_response": "We are investigating the issue and will provide updates shortly.",
                 "escalation": {
                     "required": escalation,
-                    "reason": "High priority issue" if escalation else "Standard handling"
-                }
+                    "reason": (
+                        "High priority issue" if escalation else "Standard handling"
+                    ),
+                },
             }
         )

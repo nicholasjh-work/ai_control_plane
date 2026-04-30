@@ -1,0 +1,19 @@
+{
+  "pii_patterns": [
+    "(?i)[\\w.+-]+@[\\w-]+\\.[\\w.-]+",
+    "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+  ],
+  "pii_labels": [
+    "email",
+    "ssn"
+  ],
+  "redact_keywords": ["ssn", "password", "credit card", "dob"],
+  "blocked_keywords": [],
+  "risk_score_clean": 0.25,
+  "risk_score_pii": 0.70,
+  "risk_threshold_block": 0.90,
+  "risk_threshold_approval": 0.70,
+  "confidence_score": 0.85,
+  "max_intake_length": 2000,
+  "allowed_agents": ["ClassifierAgent", "ResolverAgent", "SummaryAgent"]
+}

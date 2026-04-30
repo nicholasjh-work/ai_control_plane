@@ -1,0 +1,8 @@
+{
+  "allowed_tables": [
+    "v_ticket_summary",
+    "v_agent_performance",
+    "v_audit_summary",
+    "v_routing_decisions"
+  ]
+}

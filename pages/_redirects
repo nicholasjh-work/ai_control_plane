@@ -1,0 +1,4 @@
+/run       https://ai-control-plane.nicholasjh.workers.dev/run       200
+/v1/*      https://ai-control-plane.nicholasjh.workers.dev/v1/:splat  200
+/health    https://ai-control-plane.nicholasjh.workers.dev/health     200
+/replay/*  https://ai-control-plane.nicholasjh.workers.dev/replay/:splat 200

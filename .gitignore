@@ -1,5 +1,14 @@
 .env
-logs/
+.venv/
 __pycache__/
 *.pyc
 .DS_Store
+logs/
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+resume_translation.md
+interview_talk_track.md
+AUDIT.md
+eval/results/

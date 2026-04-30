@@ -12,5 +12,4 @@ class BaseAgent(ABC):
     name: str
 
     @abstractmethod
-    def run(self, payload: Dict[str, Any]) -> AgentResult:
-        ...
+    def run(self, payload: Dict[str, Any]) -> AgentResult: ...

@@ -1,0 +1,398 @@
+[
+  {
+    "id": "eval_001",
+    "intake": {
+      "title": "Invoice not received for March",
+      "description": "I submitted my invoice on March 1st and have not received payment after 30 days.",
+      "requester_email": "contractor@vendorcorp.com",
+      "department": "finance",
+      "system": "billing_portal",
+      "urgency": "high"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_002",
+    "intake": {
+      "title": "Duplicate charge on account",
+      "description": "My account was charged twice for the same subscription on April 15th. Please refund the duplicate payment.",
+      "requester_email": "user@company.com",
+      "department": "finance",
+      "system": "billing_portal",
+      "urgency": "high"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_003",
+    "intake": {
+      "title": "Refund request for cancelled service",
+      "description": "I cancelled my account on April 1st but was still charged for April. I need a refund for the unused period.",
+      "requester_email": "customer@example.com",
+      "department": "finance",
+      "system": "subscriptions",
+      "urgency": "medium"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_004",
+    "intake": {
+      "title": "Dashboard not loading — production outage",
+      "description": "The analytics dashboard is throwing a 502 error for all users since 09:00 UTC. This is causing latency on all reporting pipelines.",
+      "requester_email": "oncall@eng.internal",
+      "department": "engineering",
+      "system": "analytics_platform",
+      "urgency": "critical"
+    },
+    "expected_routing_team": "technical",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_005",
+    "intake": {
+      "title": "API timeout on data export endpoint",
+      "description": "The /export endpoint times out after 30 seconds for datasets over 10k rows. This is causing failures in the nightly ETL job.",
+      "requester_email": "data-team@company.com",
+      "department": "data",
+      "system": "api_gateway",
+      "urgency": "high"
+    },
+    "expected_routing_team": "technical",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_006",
+    "intake": {
+      "title": "Application crash on login for Safari users",
+      "description": "Safari users on iOS 17 are experiencing a crash immediately after entering credentials. Chrome and Firefox are unaffected. Bug filed in JIRA-4421.",
+      "requester_email": "support@company.com",
+      "department": "engineering",
+      "system": "auth_service",
+      "urgency": "high"
+    },
+    "expected_routing_team": "technical",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_007",
+    "intake": {
+      "title": "PII audit log review request",
+      "description": "Legal requires a review of all audit logs containing PII fields for the Q1 compliance report. Please flag any policy violations.",
+      "requester_email": "compliance@company.com",
+      "department": "legal",
+      "system": "audit_system",
+      "urgency": "medium"
+    },
+    "expected_routing_team": "compliance",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_008",
+    "intake": {
+      "title": "Data redaction policy clarification",
+      "description": "We need to confirm whether the current redaction policy covers SSN fields in ingestion pipelines, and whether violations are automatically escalated.",
+      "requester_email": "dpo@company.com",
+      "department": "legal",
+      "system": "governance_platform",
+      "urgency": "low"
+    },
+    "expected_routing_team": "compliance",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_009",
+    "intake": {
+      "title": "Request to update user display name",
+      "description": "Please update my display name from John D to Jonathan Donahue in the internal directory.",
+      "requester_email": "john.d@company.com",
+      "department": "hr",
+      "system": "directory",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_010",
+    "intake": {
+      "title": "Office supply order for new hire",
+      "description": "Please arrange a laptop, monitor, and keyboard for the new engineer starting on May 6th. Ship to the Austin office.",
+      "requester_email": "hr@company.com",
+      "department": "hr",
+      "system": "procurement",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["routing"]
+  },
+  {
+    "id": "eval_011",
+    "intake": {
+      "title": "Payment confirmation not received",
+      "description": "Contact me at vendor.payments@acmecorp.io to confirm receipt of wire transfer #TXN-88821.",
+      "requester_email": "vendor.payments@acmecorp.io",
+      "department": "finance",
+      "system": "payments",
+      "urgency": "high"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_012",
+    "intake": {
+      "title": "Employee benefits enrollment issue",
+      "description": "Please update my SSN on file from 123-45-6789 to the correct one. The current entry is causing payroll errors.",
+      "requester_email": "employee@company.com",
+      "department": "hr",
+      "system": "payroll",
+      "urgency": "high"
+    },
+    "expected_routing_team": "technical",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_013",
+    "intake": {
+      "title": "Contractor invoice with email contact",
+      "description": "Attached invoice from billing@freelancer.net. Please process and confirm payment to the same address.",
+      "requester_email": "ap@company.com",
+      "department": "finance",
+      "system": "accounts_payable",
+      "urgency": "medium"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_014",
+    "intake": {
+      "title": "Data breach notification — SSN exposed",
+      "description": "User report indicates their SSN 987-65-4321 was visible on the account settings page. Immediate investigation required.",
+      "requester_email": "security@company.com",
+      "department": "security",
+      "system": "account_portal",
+      "urgency": "critical"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_015",
+    "intake": {
+      "title": "Vendor onboarding — contact info",
+      "description": "New vendor contact: reach out to onboarding@newvendor.co for contracts. CC procurement@newvendor.co on all communications.",
+      "requester_email": "vendor.mgmt@company.com",
+      "department": "procurement",
+      "system": "vendor_portal",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_016",
+    "intake": {
+      "title": "Support escalation with personal identifier",
+      "description": "Escalating on behalf of user with SSN 456-78-9012. Their account has been locked for 3 days with no resolution.",
+      "requester_email": "escalations@company.com",
+      "department": "support",
+      "system": "account_management",
+      "urgency": "critical"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_017",
+    "intake": {
+      "title": "Compliance audit — email trail export",
+      "description": "Please export all email records for audit@externalreviewer.org covering Q4. This is required for SOC 2 review.",
+      "requester_email": "compliance@company.com",
+      "department": "legal",
+      "system": "audit_system",
+      "urgency": "high"
+    },
+    "expected_routing_team": "compliance",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_018",
+    "intake": {
+      "title": "HR record correction with SSN",
+      "description": "Employee file contains incorrect SSN 111-22-3333. Correct value has been verified by HR. Please update the record.",
+      "requester_email": "hr-admin@company.com",
+      "department": "hr",
+      "system": "hris",
+      "urgency": "medium"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["pii"]
+  },
+  {
+    "id": "eval_019",
+    "sql": "SELECT audit_id, created_at FROM v_audit_summary WHERE resolution = 'succeeded'",
+    "expected_allowed": true,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_020",
+    "sql": "SELECT routing_team, COUNT(*) FROM v_routing_decisions GROUP BY routing_team",
+    "expected_allowed": true,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_021",
+    "sql": "SELECT agent_name, avg_latency_ms FROM v_agent_performance ORDER BY avg_latency_ms DESC LIMIT 10",
+    "expected_allowed": true,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_022",
+    "sql": "INSERT INTO v_ticket_summary (id, title) VALUES ('abc', 'test')",
+    "expected_allowed": false,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_023",
+    "sql": "DROP TABLE v_audit_summary",
+    "expected_allowed": false,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_024",
+    "sql": "SELECT * FROM raw_user_pii WHERE ssn IS NOT NULL",
+    "expected_allowed": false,
+    "tags": ["sql"]
+  },
+  {
+    "id": "eval_025",
+    "intake": {
+      "title": "Missing attachment",
+      "description": "",
+      "requester_email": "user@company.com",
+      "department": "general",
+      "system": "ticketing",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["edge"]
+  },
+  {
+    "id": "eval_026",
+    "intake": {
+      "title": "Bulk data export request",
+      "description": "We need to export the full transaction history for all accounts created between 2020-01-01 and 2024-12-31. This includes payment records, invoice references, charge-back events, and refund approvals. The export should be in CSV format, encrypted at rest, and delivered to our secure SFTP endpoint. Please include metadata fields such as account_id, transaction_type, amount, currency, timestamp, and processing_status. If any records are flagged for compliance review, include the flag reason in a separate column. Estimated record count is 4.2 million rows. Contact the data engineering team for schema documentation before initiating the export job. All access should be logged and auditable per our data governance policy.",
+      "requester_email": "dataops@company.com",
+      "department": "data",
+      "system": "data_warehouse",
+      "urgency": "medium"
+    },
+    "expected_routing_team": "billing",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["edge"]
+  },
+  {
+    "id": "eval_027",
+    "intake": {
+      "title": "Request for system access review",
+      "description": "Routine quarterly access review for all production systems. No changes requested at this time.",
+      "requester_email": "secops@company.com",
+      "department": "security",
+      "system": "iam_platform",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["edge"]
+  },
+  {
+    "id": "eval_028",
+    "intake": {
+      "title": "Résumé submission for open engineering role",
+      "description": "Submitting résumé for the senior data engineer position. Unicode characters: café, naïve, 日本語テスト. Contact: hire.me@talent.io",
+      "requester_email": "recruiter@talent.io",
+      "department": "hr",
+      "system": "ats",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "require_approval",
+    "expected_redacted": true,
+    "tags": ["edge"]
+  },
+  {
+    "id": "eval_029",
+    "intake": {
+      "title": "LLM routing fallback test",
+      "description": "This ticket is designed to test routing behavior when the classifier cannot determine a team. The content does not match any keyword in the routing configuration.",
+      "requester_email": "testuser@company.com",
+      "department": "qa",
+      "system": "test_harness",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["fallback"]
+  },
+  {
+    "id": "eval_030",
+    "intake": {
+      "title": "Onboarding checklist follow-up",
+      "description": "Following up on the onboarding checklist sent last week. All items have been completed. No further action needed from the support team.",
+      "requester_email": "newjoiner@company.com",
+      "department": "ops",
+      "system": "internal_tools",
+      "urgency": "low"
+    },
+    "expected_routing_team": "general",
+    "expected_policy_decision": "allow",
+    "expected_redacted": false,
+    "tags": ["fallback"]
+  }
+]

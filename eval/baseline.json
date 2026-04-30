@@ -1,0 +1,538 @@
+{
+  "total": 30,
+  "passed": 30,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "pass_rate_pct": "100.0%",
+  "results_by_tag": {
+    "routing": "10/10",
+    "pii": "8/8",
+    "sql": "6/6",
+    "edge": "4/4",
+    "fallback": "2/2"
+  },
+  "results": [
+    {
+      "passed": true,
+      "latency_ms": 77,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_001",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 50,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_002",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_003",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_004",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_005",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 71,
+      "actual": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "technical",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_006",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "compliance",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "compliance",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_007",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 51,
+      "actual": {
+        "routing_team": "compliance",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "compliance",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_008",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 50,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_009",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 47,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_010",
+      "tags": [
+        "routing"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 2,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_011",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "technical",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "technical",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_012",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_013",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 2,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_014",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_015",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_016",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "compliance",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "compliance",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_017",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_018",
+      "tags": [
+        "pii"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 2,
+      "actual": {
+        "allowed": true,
+        "reason": "ok"
+      },
+      "expected": {
+        "allowed": true
+      },
+      "id": "eval_019",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 1,
+      "actual": {
+        "allowed": true,
+        "reason": "ok"
+      },
+      "expected": {
+        "allowed": true
+      },
+      "id": "eval_020",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 0,
+      "actual": {
+        "allowed": true,
+        "reason": "ok"
+      },
+      "expected": {
+        "allowed": true
+      },
+      "id": "eval_021",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 0,
+      "actual": {
+        "allowed": false,
+        "reason": "INSERT statements are not allowed"
+      },
+      "expected": {
+        "allowed": false
+      },
+      "id": "eval_022",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 0,
+      "actual": {
+        "allowed": false,
+        "reason": "DROP statements are not allowed"
+      },
+      "expected": {
+        "allowed": false
+      },
+      "id": "eval_023",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 0,
+      "actual": {
+        "allowed": false,
+        "reason": "table 'raw_user_pii' is not in the allowed views list"
+      },
+      "expected": {
+        "allowed": false
+      },
+      "id": "eval_024",
+      "tags": [
+        "sql"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_025",
+      "tags": [
+        "edge"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 48,
+      "actual": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "billing",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_026",
+      "tags": [
+        "edge"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 50,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_027",
+      "tags": [
+        "edge"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 19,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "require_approval",
+        "redacted": true
+      },
+      "id": "eval_028",
+      "tags": [
+        "edge"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 48,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_029",
+      "tags": [
+        "fallback"
+      ]
+    },
+    {
+      "passed": true,
+      "latency_ms": 49,
+      "actual": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "expected": {
+        "routing_team": "general",
+        "policy_decision": "allow",
+        "redacted": false
+      },
+      "id": "eval_030",
+      "tags": [
+        "fallback"
+      ]
+    }
+  ]
+}

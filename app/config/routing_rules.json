@@ -1,0 +1,5 @@
+{
+  "billing": ["invoice", "payment", "charge", "refund"],
+  "technical": ["error", "bug", "crash", "timeout", "latency"],
+  "compliance": ["audit", "policy", "violation", "redact", "pii"]
+}

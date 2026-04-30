@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class IntakeRequest(BaseModel):
     title: str
     description: str
@@ -7,4 +8,3 @@ class IntakeRequest(BaseModel):
     department: str
     system: str
     urgency: str
-

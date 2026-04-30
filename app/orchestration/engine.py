@@ -1,4 +1,6 @@
-from typing import List, Dict, Any
+# Linear workflow engine — runs agents in sequence, merging outputs — Nicholas Hidalgo
+from typing import Any, Dict, List
+
 from app.agents.base import BaseAgent
 
 
@@ -7,22 +9,14 @@ class WorkflowEngine:
         self.agents = agents
 
     def run(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        ctx = {
-            "initial_input": payload,
-            "steps": []
-        }
-
+        ctx = {"initial_input": payload, "steps": []}
         current_payload = payload.copy()
 
         for agent in self.agents:
             result = agent.run(current_payload)
-
-            ctx["steps"].append({
-                "agent": agent.name,
-                "output": result.output,
-                "meta": result.meta
-            })
-
+            ctx["steps"].append(
+                {"agent": agent.name, "output": result.output, "meta": result.meta}
+            )
             current_payload.update(result.output)
 
         ctx["final_output"] = current_payload

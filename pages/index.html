@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ai_control_plane — Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --pass: #4ade80;
+      --warn: #fbbf24;
+      --fail: #f87171;
+      --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--bg);
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+
+    header h1 { font-size: 1rem; font-weight: 600; color: var(--text); }
+    header p  { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+
+    .badge {
+      margin-left: auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .pill {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .pill-blue  { background: #1e3a5f; color: var(--accent); }
+    .pill-purple { background: #2e1f5e; color: var(--accent2); }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 0;
+    }
+
+    .panel {
+      padding: 1.75rem;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    .panel h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      margin-top: 0.9rem;
+    }
+    label:first-of-type { margin-top: 0; }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 0.65rem;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.825rem;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    .actions { margin-top: 1.5rem; display: flex; gap: 0.75rem; }
+
+    button {
+      padding: 0.55rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-replay { background: var(--accent2); color: #fff; }
+
+    .sql-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sql-section textarea { font-family: var(--mono); font-size: 0.775rem; }
+
+    .output-panel {
+      padding: 1.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .output-panel h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green  { background: var(--pass); }
+    .dot-yellow { background: var(--warn); }
+    .dot-red    { background: var(--fail); }
+    .dot-grey   { background: var(--border); }
+
+    .status-label { font-weight: 700; font-size: 0.875rem; }
+    .status-sub   { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+    }
+    .metric-card .label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+    .metric-card .value { font-size: 1.25rem; font-weight: 700; margin-top: 0.2rem; }
+
+    .flag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .flag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .flag-pii    { background: #4c1d1d; color: var(--fail); }
+    .flag-ok     { background: #14281a; color: var(--pass); }
+    .flag-warn   { background: #3d2f0a; color: var(--warn); }
+    .flag-neutral { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+
+    .actions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .actions-list li {
+      font-size: 0.8rem;
+      padding: 0.45rem 0.75rem;
+      background: var(--surface);
+      border-radius: 5px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .draft-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.825rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .summary-box {
+      background: var(--surface);
+      border: 1px solid var(--accent2);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.825rem;
+      font-style: italic;
+      color: var(--accent2);
+    }
+
+    .json-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--muted);
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .replay-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem;
+    }
+    .replay-bar code {
+      font-family: var(--mono);
+      color: var(--accent2);
+      font-size: 0.7rem;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--border);
+      font-size: 0.875rem;
+      padding: 4rem;
+      text-align: center;
+    }
+    .empty-state svg { opacity: 0.3; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      gap: 1.5rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      .panel { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NH</div>
+  <div>
+    <h1>ai_control_plane</h1>
+    <p>Governance-first AI orchestration — policy enforcement, auditable decisions, SQL safety</p>
+  </div>
+  <div class="badge">
+    <span class="pill pill-blue">FastAPI</span>
+    <span class="pill pill-purple">Phase 6</span>
+  </div>
+</header>
+
+<main>
+  <!-- LEFT: Input panel -->
+  <div class="panel">
+    <h2>Submit Ticket</h2>
+
+    <label for="title">Title</label>
+    <input id="title" type="text" placeholder="e.g. Invoice not received for March" value="Invoice not received for March" />
+
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Describe the issue...">I submitted my invoice on March 1st and have not received payment after 30 days. Please advise.</textarea>
+
+    <label for="email">Requester Email</label>
+    <input id="email" type="email" placeholder="user@company.com" value="contractor@company.com" />
+
+    <div class="row2">
+      <div>
+        <label for="department">Department</label>
+        <input id="department" type="text" placeholder="finance" value="finance" />
+      </div>
+      <div>
+        <label for="system">System</label>
+        <input id="system" type="text" placeholder="billing_portal" value="billing_portal" />
+      </div>
+    </div>
+
+    <label for="urgency">Urgency</label>
+    <select id="urgency">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high" selected>High</option>
+      <option value="critical">Critical</option>
+    </select>
+
+    <div class="actions">
+      <button class="btn-primary" id="submitBtn" onclick="submitTicket()">Run Workflow</button>
+      <button class="btn-secondary" onclick="loadExample('pii')">PII Example</button>
+      <button class="btn-secondary" onclick="loadExample('technical')">Technical</button>
+    </div>
+
+    <!-- SQL Validator -->
+    <div class="sql-section">
+      <h2>SQL Safety Validator</h2>
+      <label for="sqlInput">SQL Query</label>
+      <textarea id="sqlInput" rows="3" placeholder="SELECT * FROM v_ticket_summary">SELECT audit_id, created_at FROM v_audit_summary WHERE resolution = 'succeeded'</textarea>
+      <div class="actions" style="margin-top: 0.75rem;">
+        <button class="btn-secondary" onclick="validateSQL()">Validate Query</button>
+        <button class="btn-secondary" onclick="loadSQLExample('bad')">Try Blocked</button>
+      </div>
+      <div id="sqlResult" style="margin-top: 0.75rem; display: none;"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Output panel -->
+  <div class="output-panel" id="outputPanel">
+    <div class="empty-state" id="emptyState">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+      <p>Submit a ticket or validate SQL to see results here.</p>
+    </div>
+    <div id="resultContent" style="display:none; display:flex; flex-direction:column; gap:1.25rem;"></div>
+  </div>
+</main>
+
+<footer>
+  <span>ai_control_plane — Nicholas Hidalgo</span>
+  <a href="https://github.com/nicholasjh-work/ai_control_plane" target="_blank">GitHub</a>
+  <a href="/docs" target="_blank">API Docs</a>
+  <span style="margin-left: auto;">Phase 6 · FastAPI + PostgreSQL + sqlglot</span>
+</footer>
+
+<script>
+  const API = '';
+
+  const EXAMPLES = {
+    pii: {
+      title: 'SSN update request',
+      description: 'Please update the SSN on file. Current record shows 123-45-6789 which is incorrect.',
+      email: 'hr-admin@company.com',
+      department: 'hr',
+      system: 'payroll',
+      urgency: 'high',
+    },
+    technical: {
+      title: 'API timeout on export endpoint',
+      description: 'The /export endpoint times out after 30s for datasets over 10k rows, causing ETL failures.',
+      email: 'data-team@company.com',
+      department: 'data',
+      system: 'api_gateway',
+      urgency: 'critical',
+    },
+  };
+
+  const SQL_EXAMPLES = {
+    bad: 'DROP TABLE v_audit_summary',
+  };
+
+  function loadExample(key) {
+    const e = EXAMPLES[key];
+    if (!e) return;
+    document.getElementById('title').value = e.title;
+    document.getElementById('description').value = e.description;
+    document.getElementById('email').value = e.email;
+    document.getElementById('department').value = e.department;
+    document.getElementById('system').value = e.system;
+    document.getElementById('urgency').value = e.urgency;
+  }
+
+  function loadSQLExample(key) {
+    document.getElementById('sqlInput').value = SQL_EXAMPLES[key] || '';
+  }
+
+  function statusColor(status, pii) {
+    if (status === 'blocked') return 'dot-red';
+    if (status === 'needs_approval') return 'dot-yellow';
+    return 'dot-green';
+  }
+
+  function statusLabel(status, pii) {
+    if (status === 'blocked') return 'Blocked by Policy';
+    if (status === 'needs_approval') return 'Pending Approval';
+    if (pii) return 'Succeeded · PII Redacted';
+    return 'Succeeded';
+  }
+
+  function renderResult(data, latency) {
+    const pii = data.pii_detected;
+    const dotClass = statusColor(data.status, pii);
+    const label = statusLabel(data.status, pii);
+    const auditId = data.audit_id || '';
+
+    let flags = '';
+    if (pii) flags += '<span class="flag flag-pii">PII Detected</span> ';
+    if (data.redacted) flags += '<span class="flag flag-warn">Redacted</span> ';
+    if (data.status === 'succeeded' && !pii) flags += '<span class="flag flag-ok">Clean</span> ';
+    if (data.status === 'needs_approval') flags += '<span class="flag flag-warn">Needs Approval</span> ';
+    if (data.status === 'blocked') flags += '<span class="flag flag-pii">Blocked</span> ';
+
+    const actions = (data.suggested_actions || [])
+      .map(a => `<li>${a}</li>`).join('');
+
+    const summary = data.summary && data.summary !== 'unavailable'
+      ? `<div class="section-label">LLM Summary</div><div class="summary-box">${data.summary}</div>`
+      : '';
+
+    const replayBar = auditId
+      ? `<div class="replay-bar">
+           <code>${auditId}</code>
+           <button class="btn-replay" style="font-size:0.7rem;padding:3px 10px;" onclick="replayAudit('${auditId}')">Replay</button>
+         </div>`
+      : '';
+
+    document.getElementById('emptyState').style.display = 'none';
+    const rc = document.getElementById('resultContent');
+    rc.style.display = 'flex';
+    rc.innerHTML = `
+      <div>
+        <div class="section-label">Workflow Result</div>
+        <div class="status-bar">
+          <div class="status-dot ${dotClass}"></div>
+          <span class="status-label">${label}</span>
+          <span class="status-sub">${latency}ms · ${data.priority || '–'}</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="label">Routing Team</div>
+          <div class="value" style="font-size:1rem;">${data.routing_team || '–'}</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Category</div>
+          <div class="value" style="font-size:1rem;">${data.category || '–'}</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">Risk Score</div>
+          <div class="value" style="color:${data.risk_score >= 0.7 ? 'var(--warn)' : 'var(--pass)'}">
+            ${(data.risk_score * 100).toFixed(0)}%
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Policy Flags</div>
+        <div class="flag-row">${flags || '<span class="flag flag-neutral">None</span>'}</div>
+      </div>
+
+      ${summary}
+
+      ${actions ? `<div>
+        <div class="section-label">Suggested Actions</div>
+        <ul class="actions-list">${actions}</ul>
+      </div>` : ''}
+
+      ${data.draft_response ? `<div>
+        <div class="section-label">Draft Response</div>
+        <div class="draft-box">${data.draft_response}</div>
+      </div>` : ''}
+
+      ${replayBar ? `<div>
+        <div class="section-label">Audit ID · Replay</div>
+        ${replayBar}
+      </div>` : ''}
+
+      <div>
+        <div class="section-label">Raw JSON</div>
+        <div class="json-block">${JSON.stringify(data, null, 2)}</div>
+      </div>
+    `;
+  }
+
+  async function submitTicket() {
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Running…';
+
+    const body = {
+      title: document.getElementById('title').value,
+      description: document.getElementById('description').value,
+      requester_email: document.getElementById('email').value,
+      department: document.getElementById('department').value,
+      system: document.getElementById('system').value,
+      urgency: document.getElementById('urgency').value,
+    };
+
+    const t0 = performance.now();
+    try {
+      const res = await fetch(`${API}/run`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      const latency = Math.round(performance.now() - t0);
+      renderResult(data, latency);
+    } catch (err) {
+      document.getElementById('emptyState').style.display = 'none';
+      const rc = document.getElementById('resultContent');
+      rc.style.display = 'flex';
+      rc.innerHTML = `<div class="status-bar">
+        <div class="status-dot dot-red"></div>
+        <span class="status-label">Connection Error</span>
+        <span class="status-sub">${err.message}</span>
+      </div>
+      <div class="draft-box" style="color:var(--fail);">Make sure the server is running: <code>make run</code></div>`;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Run Workflow';
+    }
+  }
+
+  async function replayAudit(auditId) {
+    const t0 = performance.now();
+    try {
+      const res = await fetch(`${API}/replay/${auditId}`, { method: 'POST' });
+      const data = await res.json();
+      const latency = Math.round(performance.now() - t0);
+      const inner = data.audit || data;
+      renderResult({ ...inner, ...data.result?.final_output, audit_id: auditId, status: data.status || 'replayed' }, latency);
+    } catch (err) {
+      alert('Replay failed: ' + err.message);
+    }
+  }
+
+  async function validateSQL() {
+    const sql = document.getElementById('sqlInput').value.trim();
+    const resultEl = document.getElementById('sqlResult');
+    resultEl.style.display = 'block';
+    resultEl.innerHTML = '<span class="spinner"></span>';
+
+    try {
+      const res = await fetch(`${API}/v1/sql/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: sql }),
+      });
+      const data = await res.json();
+      const ok = data.allowed;
+      resultEl.innerHTML = `
+        <div class="status-bar" style="margin-top:0;">
+          <div class="status-dot ${ok ? 'dot-green' : 'dot-red'}"></div>
+          <span class="status-label">${ok ? 'Query Allowed' : 'Query Blocked'}</span>
+          <span class="status-sub">${data.reason || ''}</span>
+        </div>`;
+    } catch (err) {
+      resultEl.innerHTML = `<div class="draft-box" style="color:var(--fail);">Server not reachable. Run <code>make run</code>.</div>`;
+    }
+  }
+</script>
+</body>
+</html>
