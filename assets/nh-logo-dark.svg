@@ -1,6 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
-  <rect width="80" height="80" rx="12" fill="#0f172a"/>
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-        font-family="system-ui, -apple-system, sans-serif"
-        font-size="32" font-weight="700" fill="#f8fafc" letter-spacing="-1">NH</text>
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left vertical element -->
+  <rect x="14" y="14" width="12" height="52" fill="#ffffff" />
+  <!-- Right vertical element -->
+  <rect x="54" y="14" width="12" height="52" fill="#ffffff" />
+  <!-- Horizontal connector - primary -->
+  <rect x="26" y="35" width="28" height="10" fill="#ffffff" />
+  <!-- Top modular node - suggests system connection -->
+  <rect x="34" y="24" width="12" height="11" fill="#ffffff" fill-opacity="0.75" />
+  <!-- Bottom modular node - creates depth -->
+  <rect x="34" y="45" width="12" height="11" fill="#ffffff" fill-opacity="0.75" />
+  <!-- Precision corner details - architectural accents -->
+  <rect x="26" y="14" width="6" height="6" fill="#ffffff" fill-opacity="0.5" />
+  <rect x="48" y="14" width="6" height="6" fill="#ffffff" fill-opacity="0.5" />
+  <rect x="26" y="60" width="6" height="6" fill="#ffffff" fill-opacity="0.5" />
+  <rect x="48" y="60" width="6" height="6" fill="#ffffff" fill-opacity="0.5" />
 </svg>
