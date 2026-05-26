@@ -3,18 +3,17 @@ Tests for approval persistence, audit lookup, and approval-ID hardening.
 
 All tests are deterministic and use mocks — no live database or LLM required.
 """
+
 import json
 import os
-import tempfile
 import uuid
-from unittest.mock import MagicMock, patch, call
-
-import pytest
+from unittest.mock import MagicMock, patch
 
 
 # ---------------------------------------------------------------------------
 # Approval ID format
 # ---------------------------------------------------------------------------
+
 
 class TestApprovalIdFormat:
     def test_approval_id_is_uuid_format(self, tmp_path):
@@ -80,6 +79,7 @@ class TestApprovalIdFormat:
 # JSONL ledger still written
 # ---------------------------------------------------------------------------
 
+
 class TestJsonlLedger:
     def test_jsonl_ledger_receives_approval_record(self, tmp_path):
         """Approval record is always appended to the JSONL ledger."""
@@ -129,6 +129,7 @@ class TestJsonlLedger:
 # PostgreSQL approval persistence
 # ---------------------------------------------------------------------------
 
+
 class TestPostgresApprovalPersistence:
     def _make_mock_row(self, audit_id: str) -> MagicMock:
         row = MagicMock()
@@ -142,7 +143,9 @@ class TestPostgresApprovalPersistence:
 
         mock_row = self._make_mock_row("audit-999")
         mock_session = MagicMock()
-        mock_session.query.return_value.filter.return_value.first.return_value = mock_row
+        mock_session.query.return_value.filter.return_value.first.return_value = (
+            mock_row
+        )
 
         with patch("app.governance.approvals.SessionLocal", return_value=mock_session):
             _update_postgres_approval("audit-999", "approved")
@@ -157,7 +160,9 @@ class TestPostgresApprovalPersistence:
         mock_row = self._make_mock_row("audit-888")
         mock_row.approved = True  # Start as True to confirm it gets reset
         mock_session = MagicMock()
-        mock_session.query.return_value.filter.return_value.first.return_value = mock_row
+        mock_session.query.return_value.filter.return_value.first.return_value = (
+            mock_row
+        )
 
         with patch("app.governance.approvals.SessionLocal", return_value=mock_session):
             _update_postgres_approval("audit-888", "rejected")
@@ -208,6 +213,7 @@ class TestPostgresApprovalPersistence:
 # Audit lookup — PostgreSQL primary, JSONL fallback
 # ---------------------------------------------------------------------------
 
+
 class TestAuditLookup:
     def _make_db_row(self, audit_id: str) -> MagicMock:
         row = MagicMock()
@@ -227,7 +233,9 @@ class TestAuditLookup:
 
         mock_row = self._make_db_row("audit-db-001")
         mock_session = MagicMock()
-        mock_session.query.return_value.filter.return_value.first.return_value = mock_row
+        mock_session.query.return_value.filter.return_value.first.return_value = (
+            mock_row
+        )
 
         with patch("app.governance.approvals.SessionLocal", return_value=mock_session):
             result = find_audit_record("logs/audit.jsonl", "audit-db-001")
@@ -290,10 +298,12 @@ class TestAuditLookup:
 # Approval endpoint integration (FastAPI TestClient, mocked DB)
 # ---------------------------------------------------------------------------
 
+
 class TestApprovalEndpoint:
     def _run_client(self):
         from fastapi.testclient import TestClient
         from app.main import app
+
         return TestClient(app)
 
     def _make_db_row(self, audit_id: str) -> MagicMock:
@@ -312,10 +322,14 @@ class TestApprovalEndpoint:
         """POST /approve/{audit_id} returns a UUID-format approval_id."""
         mock_row = self._make_db_row("audit-ep-001")
         mock_session = MagicMock()
-        mock_session.query.return_value.filter.return_value.first.return_value = mock_row
+        mock_session.query.return_value.filter.return_value.first.return_value = (
+            mock_row
+        )
 
-        with patch("app.governance.approvals.SessionLocal", return_value=mock_session), \
-             patch("app.governance.approvals.append_jsonl"):
+        with (
+            patch("app.governance.approvals.SessionLocal", return_value=mock_session),
+            patch("app.governance.approvals.append_jsonl"),
+        ):
             client = self._run_client()
             resp = client.post(
                 "/approve/audit-ep-001",

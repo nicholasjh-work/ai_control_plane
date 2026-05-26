@@ -30,9 +30,9 @@ def find_audit_record(audit_path: str, audit_id: str) -> Optional[Dict[str, Any]
     try:
         db = SessionLocal()
         try:
-            row = db.query(AuditRecord).filter(
-                AuditRecord.request_id == audit_id
-            ).first()
+            row = (
+                db.query(AuditRecord).filter(AuditRecord.request_id == audit_id).first()
+            )
             if row is not None:
                 return {
                     "audit_id": str(row.request_id),
@@ -114,9 +114,9 @@ def _update_postgres_approval(audit_id: str, decision: str) -> None:
         approved_flag = decision == "approved"
         db = SessionLocal()
         try:
-            row = db.query(AuditRecord).filter(
-                AuditRecord.request_id == audit_id
-            ).first()
+            row = (
+                db.query(AuditRecord).filter(AuditRecord.request_id == audit_id).first()
+            )
             if row is not None:
                 row.approved = approved_flag
                 db.commit()
