@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-<h1 align="center">ai_control_plane</h1>
+<h1 align="center">AI Control Plane</h1>
 
 <p align="center">
   <strong>Governance-first AI orchestration with policy enforcement,
